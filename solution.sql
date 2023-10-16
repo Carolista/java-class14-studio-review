@@ -1,4 +1,6 @@
 -- SETUP
+
+-- 1
 CREATE TABLE movies (
 	movie_id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(120),
@@ -6,6 +8,7 @@ CREATE TABLE movies (
     director VARCHAR(80)
 );
 
+-- 2
 CREATE TABLE directors (
 	director_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(40),
@@ -13,6 +16,7 @@ CREATE TABLE directors (
     country VARCHAR(80)
 );
 
+-- 3
 DROP TABLE movies;
 
 CREATE TABLE movies (
@@ -22,6 +26,12 @@ CREATE TABLE movies (
     director_id INT,
     FOREIGN KEY (director_id) REFERENCES directors(director_id)
 );
+
+-- 4
+-- Execute movie-buff-data.sql to insert data into tables
+
+
+-- ASSIGNMENT
 
 -- 1
 SELECT title
@@ -76,18 +86,50 @@ WHERE director_id = (SELECT director_id FROM movies WHERE title="The Incredibles
 SELECT first_name, last_name
 FROM directors
 INNER JOIN movies ON movies.director_id = directors.director_id
-WHERE movies.title = "Roma";
+WHERE title = "Roma";
 
 -- 12
 DELETE FROM movies
-WHERE movie_id = 10; /* oops, fixed it */
+WHERE movie_id = 10;
 
 -- 13
 DELETE FROM directors
-WHERE director_id = 1; /* can't be done unless movies are removed first */
+WHERE director_id = 1; /* can't be done unless related movies are removed first */
+
 
 -- Bonus mission 2
 SELECT title
 FROM movies
 INNER JOIN directors ON movies.director_id = directors.director_id
 WHERE (directors.first_name = "Peter") AND (directors.last_name = "Jackson");
+
+
+-- Bonus mission 3
+ALTER TABLE movies
+ADD earnings INT;
+
+UPDATE movies
+SET earnings=394436586
+WHERE movie_id = 1;
+
+UPDATE movies
+SET earnings=631643697
+WHERE movie_id = 2;
+
+UPDATE movies
+SET earnings=363258859
+WHERE movie_id = 4;
+
+UPDATE movies
+SET earnings=213977285
+WHERE movie_id = 5;
+
+UPDATE movies
+SET earnings=1147997407
+WHERE movie_id = 11;
+
+SELECT * FROM movies
+ORDER BY earnings DESC;
+
+SELECT * FROM movies
+WHERE earnings > 500000000;
